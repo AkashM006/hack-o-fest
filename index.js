@@ -1,33 +1,51 @@
 const https = require("https");
 const fs = require("fs");
 const session = require("express-session");
-const redisClient = require("./config/redis");
-const RedisStore = require("connect-redis")(session);
-
+const Redis = require("ioredis");
+const connectRedis = require("connect-redis");
 const express = require("express");
 const passport = require("passport");
 const app = express();
-
 require("dotenv").config();
 
+const RedisStore = connectRedis(session);
+const redis = new Redis();
+
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+// const redis = new Redis({
+//   port: 15499,
+//   host: process.env.REDIS_HOST,
+//   password: process.env.REDIS_PASSWORD,
+//   connectTimeout: 5000,
+// });
+// const createRedisConnection = async function () {
+//   const redisClient = await new Redis({
+//     host: process.env.REDIS_HOST,
+//     port: 15499,
+//     password: process.env.REDIS_PASSWORD,
+//   });
+//   return redisClient;
+// };
+
+// const redis = createRedisConnection();
 
 app.use(
   session({
-    store: new RedisStore({ client: redisClient }),
+    store: new RedisStore({ client: redis }),
     saveUninitialized: false,
     resave: false,
     secret: process.env.SESSION_SECRET,
     cookie: {
       secure: true,
       httpOnly: true,
-      maxAge: 60 * 60 * 30,
+      maxAge: 1000 * 60 * 30,
     },
   })
 );
 
-// app.use(passport.initialize());
-// app.use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
 
 require("./config/passport");
 

@@ -1,6 +1,5 @@
 const Sequelize = require("sequelize");
 
-// const sequelize = new Sequelize("mysql://root:Abcd@1234:3306/sample");
 const dbConfig = {
   HOST: process.env.DB_HOST,
   USER: process.env.DB_USER,
@@ -14,13 +13,4 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   dialect: dbConfig.DIALECT,
 });
 
-const testConnection = async () => {
-  try {
-    await sequelize.authenticate();
-    return "Established the connection";
-  } catch (err) {
-    return "Mysql error: " + err;
-  }
-};
-
-module.exports = { testConnection };
+module.exports = { sequelize };

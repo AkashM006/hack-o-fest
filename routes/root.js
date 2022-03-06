@@ -1,16 +1,13 @@
 const express = require("express");
 const app = express.Router();
-const { testConnection } = require("../services/db");
+const registerRoute = require("./secondary/register");
+const loginRoute = require("./secondary/login");
+
+app.use("/register", registerRoute);
+app.use("/login", loginRoute);
 
 app.get("/", async (req, res) => {
-  try {
-    const message = await testConnection();
-    console.log(message);
-    res.send("Hello");
-  } catch (err) {
-    console.log(err);
-    res.send("Wrong");
-  }
+  res.send("hello");
 });
 
 module.exports = app;
