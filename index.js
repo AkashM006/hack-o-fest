@@ -13,22 +13,12 @@ const redis = new Redis();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-// const redis = new Redis({
-//   port: 15499,
-//   host: process.env.REDIS_HOST,
-//   password: process.env.REDIS_PASSWORD,
-//   connectTimeout: 5000,
-// });
 // const createRedisConnection = async function () {
 //   const redisClient = await new Redis({
 //     host: process.env.REDIS_HOST,
 //     port: 15499,
 //     password: process.env.REDIS_PASSWORD,
 //   });
-//   return redisClient;
-// };
-
-// const redis = createRedisConnection();
 
 app.use(
   session({
