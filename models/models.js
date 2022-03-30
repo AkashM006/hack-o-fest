@@ -15,6 +15,10 @@ const User = sequelize.define("users", {
         args: true,
         msg: "Please enter valid email",
       },
+      len: {
+        args: [5, 40],
+        msg: "Email must be atleast 5 characters long and can be 64 characters long",
+      },
     },
   },
   name: {
@@ -22,8 +26,8 @@ const User = sequelize.define("users", {
     allowNull: false,
     validate: {
       len: {
-        args: [3, 64],
-        msg: "Name must be atleast 3 character long and can be 64 character long",
+        args: [3, 40],
+        msg: "Name must be atleast 3 character long and can be 40 character long",
       },
     },
   },
